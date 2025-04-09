@@ -8,10 +8,9 @@ import Dashboard from './components/Dashboard'
 import Vision from './components/Vision'
 import Footer from './components/Footer'
 import Navigation from './components/Navigation'
-
 import Profile from './components/Profile'
-
 import Review from './components/Review'
+import SocialProof from './components/SocialProof'
 
 function App() {
   return (
@@ -37,6 +36,7 @@ function App() {
       <Dashboard />
       <BusinessSteps />
       <Vision />
+      <SocialProof />
       <Testimonial />
       <Footer />
     </div>
