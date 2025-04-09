@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #0066FF;
+  --secondary: #FF6B6B;
+  --accent: #FF69B4;
+  --dark: #1A1A1A;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter var', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #000000;
+  overflow-x: hidden;
+}
+
+.bg-gradient-radial {
+  background: radial-gradient(circle at center,
+    rgba(0, 102, 255, 0.15) 0%,
+    rgba(0, 0, 0, 0) 70%
+  );
+}
+
+.circle-pattern {
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transform-origin: center;
+}
+
+.circle-1 { transform: scale(0.5); }
+.circle-2 { transform: scale(0.7); }
+.circle-3 { transform: scale(0.9); }
+.circle-4 { transform: scale(1.1); }
+
+@keyframes float {
+  0%, 100% {
+    transform: translate(-50%, -50%) translateY(0);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(-20px);
+  }
+}
+
+@keyframes float-delayed {
+  0%, 100% {
+    transform: translate(50%, -50%) translateY(-20px);
+  }
+  50% {
+    transform: translate(50%, -50%) translateY(0);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 6s ease-in-out infinite;
+}
