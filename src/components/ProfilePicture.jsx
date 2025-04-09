@@ -41,11 +41,14 @@ export default function ProfilePicture() {
   };
 
   const handleSave = () => {
-    navigate('/dashboard');
+    navigate('/onboarding/role');
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center p-4"
+         style={{
+           background: 'linear-gradient(360deg, rgba(185, 8, 118, 0.21), rgba(3, 1, 2, 0))'
+         }}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -90,7 +93,7 @@ export default function ProfilePicture() {
                   onClick={handleSave}
                   className="px-4 py-2 bg-[#4285F4] text-white rounded-md hover:bg-[#357ABD]"
                 >
-                  Save
+                  Continue
                 </motion.button>
               </div>
             </div>

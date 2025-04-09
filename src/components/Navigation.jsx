@@ -26,6 +26,7 @@ export default function Navigation() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => navigate('/find-cofounder')}
             className="px-6 py-2 bg-transparent border border-[#FF6B6B] text-white rounded-full hover:bg-[#FF6B6B] transition-all duration-300 font-medium"
           >
             Find a CoFounder
