@@ -24,6 +24,7 @@ import HomeFeed from './components/home/HomeFeed';
 import FindCoFounder from './components/FindCoFounder';
 import FindAdvisor from './components/FindAdvisor';
 import Messages from './components/Messages';
+import MessageChat from './components/MessageChat';
 
 function App() {
   return (
@@ -68,6 +69,7 @@ function App() {
         <Route path="/find-cofounder" element={<FindCoFounder />} />
         <Route path="/find-advisor" element={<FindAdvisor />} />
         <Route path="/messages" element={<Messages />} />
+        <Route path="/messages/chat/:id" element={<MessageChat />} />
       </Routes>
     </Router>
   );
