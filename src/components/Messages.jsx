@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Header from './home/Header';
+import LeftSidebar from './home/LeftSidebar';
 
 const conversations = [
   {
@@ -29,7 +30,7 @@ const conversations = [
     user: {
       name: "AYUSMAN S.",
       avatar: "https://i.pravatar.cc/150?img=3",
-      lastMessage: "You: 9512087057 this is my whatsapp number message me to discussion related to idea.",
+      lastMessage: "9512087057 this is my whatsapp number message me to discussion related to idea.",
       timestamp: "07 Apr 25",
       timeAgo: "2 days ago"
     }
@@ -49,7 +50,7 @@ const conversations = [
     user: {
       name: "Prashant J.",
       avatar: "https://i.pravatar.cc/150?img=5",
-      lastMessage: "You: 9512087057 free then tell me this is my number connect. Discussion",
+      lastMessage: "9512087057 free then tell me this is my number connect. Discussion",
       timestamp: "06 Apr 25",
       timeAgo: "3 days ago"
     }
@@ -67,7 +68,7 @@ const conversations = [
   }
 ];
 
-const dummyMessages = [
+const messages = [
   {
     id: 1,
     sender: "AYUSMAN SAHOO",
@@ -110,6 +111,7 @@ export default function Messages() {
   const [selectedChat, setSelectedChat] = useState(conversations[2]); // Set AYUSMAN S. as default selected
   const [searchTerm, setSearchTerm] = useState('');
   const [messageText, setMessageText] = useState('');
+  const [showUnread, setShowUnread] = useState(false);
 
   const handleSendMessage = (e) => {
     e.preventDefault();
@@ -123,11 +125,16 @@ export default function Messages() {
       <Header />
       
       <div className="max-w-7xl mx-auto px-4 pt-20">
-        <div className="flex h-[calc(100vh-5rem)]">
+        <div className="flex gap-8">
           {/* Left Sidebar */}
+          <div className="hidden lg:block w-1/4 sticky top-20 h-[calc(100vh-5rem)]">
+            <LeftSidebar />
+          </div>
+
+          {/* Messages List */}
           <div className="w-1/3 border-r border-gray-800">
             <div className="p-4">
-              <h2 className="text-xl font-bold mb-4">Message</h2>
+              <h2 className="text-xl font-bold mb-4">Messages</h2>
               <div className="relative mb-4">
                 <input
                   type="text"
@@ -152,13 +159,25 @@ export default function Messages() {
               </div>
 
               <div className="flex gap-2 mb-4">
-                <button className="px-4 py-2 bg-[#0475DC] text-white rounded-lg text-sm">All</button>
-                <button className="px-4 py-2 bg-[#1A1A1A] text-gray-300 rounded-lg text-sm">Unread</button>
+                <button 
+                  onClick={() => setShowUnread(false)}
+                  className={`px-4 py-2 rounded-lg text-sm ${!showUnread ? 'bg-[#0475DC] text-white' : 'bg-[#1A1A1A] text-gray-300'}`}
+                >
+                  All
+                </button>
+                <button 
+                  onClick={() => setShowUnread(true)}
+                  className={`px-4 py-2 rounded-lg text-sm ${showUnread ? 'bg-[#0475DC] text-white' : 'bg-[#1A1A1A] text-gray-300'}`}
+                >
+                  Unread
+                </button>
               </div>
             </div>
 
             <div className="overflow-y-auto h-[calc(100vh-13rem)]">
-              {conversations.map((conv) => (
+              {conversations
+                .filter(conv => !showUnread || conv.user.isNew)
+                .map((conv) => (
                 <motion.button
                   key={conv.id}
                   onClick={() => setSelectedChat(conv)}
@@ -193,9 +212,9 @@ export default function Messages() {
           </div>
 
           {/* Chat Window */}
-          <div className="flex-1 flex flex-col bg-[#0A0A0A]">
+          <div className="flex-1">
             {selectedChat ? (
-              <>
+              <div className="h-[calc(100vh-5rem)] flex flex-col">
                 {/* Chat Header */}
                 <div className="p-4 border-b border-gray-800 flex items-center justify-between">
                   <div className="flex items-center gap-3">
@@ -218,7 +237,7 @@ export default function Messages() {
 
                 {/* Messages Area */}
                 <div className="flex-1 overflow-y-auto p-4">
-                  {dummyMessages.map((message, index) => (
+                  {messages.map((message) => (
                     <div key={message.id} className="mb-6">
                       {message.date && (
                         <div className="text-center text-sm text-gray-500 my-4">
@@ -250,7 +269,7 @@ export default function Messages() {
                         </div>
                         {message.isUser && (
                           <img
-                            src="https://i.pravatar.cc/150?u=user"
+                            src="https://i.pravatar.cc/150?u=jeetu"
                             alt="You"
                             className="w-8 h-8 rounded-full"
                           />
@@ -291,9 +310,9 @@ export default function Messages() {
                     </button>
                   </div>
                 </form>
-              </>
+              </div>
             ) : (
-              <div className="flex-1 flex items-center justify-center text-gray-400">
+              <div className="h-[calc(100vh-5rem)] flex items-center justify-center text-gray-400">
                 <div className="text-center">
                   <svg className="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
