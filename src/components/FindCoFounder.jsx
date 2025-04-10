@@ -1,101 +1,55 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 import Header from './home/Header';
 import LeftSidebar from './home/LeftSidebar';
+import ConnectModal from './ConnectModal';
 
-const founders = [
-  {
-    id: 1,
-    name: "Gabriel Tomescu",
-    title: "Design Leader Interested ...",
-    image: "https://i.pravatar.cc/150?img=11",
-    verified: true
-  },
-  {
-    id: 2,
-    name: "Marie Eric",
-    title: "Founder & CEO of Eddie P...",
-    image: "https://i.pravatar.cc/150?img=12",
-    verified: true
-  },
-  {
-    id: 3,
-    name: "Larry Gordon",
-    title: "There Is No Success Witho...",
-    image: "https://i.pravatar.cc/150?img=13",
-    verified: true
-  },
-  {
-    id: 4,
-    name: "Vivek Wairy",
-    title: "Passionate About Startups...",
-    image: "https://i.pravatar.cc/150?img=14",
-    verified: true
-  },
-  {
-    id: 5,
-    name: "Saviour Eking",
-    title: "I'm Here To Build And Les...",
-    image: "https://i.pravatar.cc/150?img=15",
-    verified: true
-  },
-  {
-    id: 6,
-    name: "Jeetu Prajapati",
-    title: "My Name Is Jeetu Prajapat...",
-    image: "https://i.pravatar.cc/150?img=16",
-    verified: true
-  },
-  {
-    id: 7,
-    name: "Abdul Bashir Abdul Zahir",
-    title: "Building The Future, Sca...",
-    image: "https://i.pravatar.cc/150?img=17",
-    verified: true
-  },
-  {
-    id: 8,
-    name: "Sal Harsha",
-    title: "Best Defensive For A Bran...",
-    image: "https://i.pravatar.cc/150?img=18",
-    verified: true
-  },
-  {
-    id: 9,
-    name: "Mustafa Troan",
-    title: "Communication In Harm...",
-    image: "https://i.pravatar.cc/150?img=19",
-    verified: true
-  },
-  {
-    id: 10,
-    name: "Riley Bell",
-    title: "Searching For CTO Co-Foun...",
-    image: "https://i.pravatar.cc/150?img=20",
-    verified: true
-  },
-  {
-    id: 11,
-    name: "Rajesh Sharma",
-    title: "Building Travel Products ...",
-    image: "https://i.pravatar.cc/150?img=21",
-    verified: true
-  },
-  {
-    id: 12,
-    name: "Damien Huzard",
-    title: "The All-In-One Solution F...",
-    image: "https://i.pravatar.cc/150?img=22",
-    verified: true
-  }
-];
+const generateFounder = (id) => ({
+  id,
+  name: [
+    "Gabriel Tomescu", "Marie Eric", "Larry Gordon", "Vivek Wairy",
+    "Saviour Eking", "Jeetu Prajapati", "Abdul Bashir", "Sal Harsha",
+    "Mustafa Troan", "Riley Bell", "Rajesh Sharma", "Damien Huzard",
+    "Sarah Chen", "Michael Rodriguez", "Emily Watson"
+  ][id % 15],
+  title: [
+    "Design Leader Interested ...",
+    "Founder & CEO of Eddie P...",
+    "There Is No Success Witho...",
+    "Passionate About Startups...",
+    "Building The Future Of...",
+    "Tech Innovator & Entre...",
+    "Blockchain Developer Se...",
+    "AI Researcher Looking...",
+    "Product Manager With...",
+    "Serial Entrepreneur In..."
+  ][id % 10],
+  image: `https://i.pravatar.cc/150?img=${id + 10}`,
+  verified: Math.random() > 0.5
+});
+
+const founders = Array.from({ length: 20 }, (_, i) => generateFounder(i + 1));
 
 export default function FindCoFounder() {
+  const [showConnectModal, setShowConnectModal] = useState(false);
+  const [selectedFounder, setSelectedFounder] = useState(null);
+  const navigate = useNavigate();
+
+  const handleConnect = (founder) => {
+    setSelectedFounder(founder);
+    setShowConnectModal(true);
+  };
+
+  const handleMessage = (founder) => {
+    navigate(`/messages/chat/${founder.id}`, { state: { conversation: founder } });
+  };
+
   return (
     <div className="min-h-screen bg-[#0A0A0A] text-white">
       <Header />
-      
+
       <div className="max-w-7xl mx-auto px-4 pt-20">
         <div className="flex gap-8">
           {/* Left Sidebar */}
@@ -173,10 +127,16 @@ export default function FindCoFounder() {
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    <button className="flex-1 px-3 py-1.5 bg-transparent border border-gray-600 rounded-full text-xs hover:border-[#0475DC]">
+                    <button
+                      onClick={() => handleMessage(founder)}
+                      className="flex-1 px-3 py-1.5 bg-transparent border border-gray-600 rounded-full text-xs hover:border-[#0475DC]"
+                    >
                       Message
                     </button>
-                    <button className="flex-1 px-3 py-1.5 bg-[#0475DC] rounded-full text-xs hover:bg-[#0475DC]/90">
+                    <button
+                      onClick={() => handleConnect(founder)}
+                      className="flex-1 px-3 py-1.5 bg-[#0475DC] rounded-full text-xs hover:bg-[#0475DC]/90"
+                    >
                       Connect
                     </button>
                   </div>
@@ -200,6 +160,12 @@ export default function FindCoFounder() {
       </div>
 
       <Footer />
+
+      <ConnectModal
+        isOpen={showConnectModal}
+        onClose={() => setShowConnectModal(false)}
+        userName={selectedFounder?.name || ''}
+      />
     </div>
   );
 }

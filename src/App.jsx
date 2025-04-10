@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Hero from './components/Hero';
 import Features from './components/Features';
 import LogoSlider from './components/LogoSlider';
@@ -25,6 +25,10 @@ import FindCoFounder from './components/FindCoFounder';
 import FindAdvisor from './components/FindAdvisor';
 import Messages from './components/Messages';
 import MessageChat from './components/MessageChat';
+import Notifications from './components/Notifications';
+import Settings from './components/Settings';
+import Explore from './components/Explore';
+import Premium from './components/Premium';
 
 function App() {
   return (
@@ -65,11 +69,15 @@ function App() {
         <Route path="/onboarding/business-stage" element={<BusinessStage />} />
         <Route path="/onboarding/interests" element={<Interests />} />
         <Route path="/onboarding/skills" element={<Skills />} />
-        <Route path="/home" element={<HomeFeed />} />
+        <Route path="/home" element={<Navigate to="/explore" replace />} />
+        <Route path="/explore" element={<Explore />} />
         <Route path="/find-cofounder" element={<FindCoFounder />} />
         <Route path="/find-advisor" element={<FindAdvisor />} />
         <Route path="/messages" element={<Messages />} />
         <Route path="/messages/chat/:id" element={<MessageChat />} />
+        <Route path="/notifications" element={<Notifications />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/premium" element={<Premium />} />
       </Routes>
     </Router>
   );
