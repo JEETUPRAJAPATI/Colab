@@ -72,10 +72,30 @@ const advisors = [
 
 export default function FindAdvisor() {
   const [selectedCategory, setSelectedCategory] = useState('Artificial Intelligence');
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   return (
     <div className="min-h-screen bg-[#0A0A0A] text-white">
       <Header />
+
+      {/* Mobile Menu Button */}
+      <button
+        className="fixed bottom-4 right-4 lg:hidden z-50 bg-[#0475DC] p-3 rounded-full shadow-lg"
+        onClick={() => setShowMobileMenu(!showMobileMenu)}
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+      </button>
+
+      {/* Mobile Menu */}
+      {showMobileMenu && (
+        <div className="fixed inset-0 bg-black/90 z-40 lg:hidden">
+          <div className="p-4 h-full overflow-y-auto">
+            <LeftSidebar />
+          </div>
+        </div>
+      )}
 
       <div className="max-w-7xl mx-auto px-4 pt-20">
         <div className="flex gap-8">
@@ -86,9 +106,9 @@ export default function FindAdvisor() {
 
           {/* Main Content */}
           <div className="flex-1">
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
               <div>
-                <h1 className="text-3xl font-bold mb-2">Book The World's Most In-Demand Experts</h1>
+                <h1 className="text-2xl sm:text-3xl font-bold mb-2">Book The World's Most In-Demand Experts</h1>
                 <p className="text-gray-400">Connect with industry leaders and accelerate your growth</p>
               </div>
               <div className="flex gap-2">
@@ -118,7 +138,7 @@ export default function FindAdvisor() {
             </div>
 
             {/* Advisors Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {advisors.map(advisor => (
                 <motion.div
                   key={advisor.id}
@@ -159,7 +179,7 @@ export default function FindAdvisor() {
             {/* Pagination */}
             <div className="flex justify-between items-center mt-8 mb-8">
               <button className="text-gray-400 hover:text-white">Previous</button>
-              <div className="flex gap-2">
+              <div className="hidden sm:flex gap-2">
                 <button className="w-8 h-8 rounded-full bg-[#0475DC] text-white">1</button>
                 <button className="w-8 h-8 rounded-full bg-[#1A1A1A] text-white hover:bg-[#2A2A2A]">2</button>
                 <button className="w-8 h-8 rounded-full bg-[#1A1A1A] text-white hover:bg-[#2A2A2A]">3</button>

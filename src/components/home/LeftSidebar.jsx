@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function LeftSidebar() {
   const navigate = useNavigate();
-  
+  const location = useLocation();
+
   const menuItems = [
     { icon: '🔍', label: 'Explore', count: null, path: '/explore' },
     { icon: '👥', label: 'Find a CoFounder', count: null, path: '/find-cofounder' },
@@ -44,7 +45,10 @@ export default function LeftSidebar() {
           <motion.button
             key={item.label}
             onClick={() => navigate(item.path)}
-            className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-[#2A2A2A] transition-colors"
+            className={`w-full flex items-center justify-between p-3 rounded-lg transition-colors ${location.pathname === item.path
+              ? 'bg-[#0475DC] text-white'
+              : 'hover:bg-[#2A2A2A] text-gray-300'
+              }`}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -53,7 +57,10 @@ export default function LeftSidebar() {
               <span>{item.label}</span>
             </div>
             {item.count && (
-              <span className="bg-[#0475DC] text-white text-xs px-2 py-1 rounded-full">
+              <span className={`text-xs px-2 py-1 rounded-full ${location.pathname === item.path
+                ? 'bg-white/20'
+                : 'bg-[#0475DC]'
+                }`}>
                 {item.count}
               </span>
             )}
